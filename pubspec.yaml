@@ -29,6 +29,9 @@ dev_dependencies:
   # Provide a script to update all of the platform logo
   flutter_launcher_icons: ^0.9.2
 
+  # Provide a script to update all of the platform splash screen
+  flutter_native_splash: ^2.2.1
+
 # Terminal Run: flutter pub run flutter_launcher_icons:main
 flutter_icons:
   ios: true
@@ -37,6 +40,11 @@ flutter_icons:
   remove_alpha_ios: true
 #  adaptive_icon_foreground: asset/image/icon/app.png
 #  adaptive_icon_background: '#3C8DBC'
+
+# Terminal Run: flutter pub run flutter_native_splash:create
+flutter_native_splash:
+  image: asset/media/image/app_splash.png
+  color: '#FFFFFF'
 
 # The following section is specific to Flutter packages.
 flutter:
