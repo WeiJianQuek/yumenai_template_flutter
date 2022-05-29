@@ -9,24 +9,20 @@ class ListViewComponent extends ListView {
 
   static Widget pagination({
     GlobalKey<PaginationListViewComponentState>? key,
-    required final int Function() onCount,
-    required final Widget Function(int) onBuild,
-    required final Future<bool> Function(int)? onLoad,
+    required final Future<bool> Function(int indexPage) onLoad,
+    required final int Function() onItemCount,
+    required final Widget Function(BuildContext context, int indexPosition) onItemBuild,
     final ScrollController? controller,
-    final Widget? header,
-    final bool enableReverse = false,
     final Axis axis = Axis.vertical,
     final EdgeInsets? padding,
     final int initialIndexPage = 1,
   }) {
     return PaginationListViewComponent(
       key: key,
-      onCount: onCount,
-      onBuild: onBuild,
+      onItemCount: onItemCount,
+      onItemBuild: onItemBuild,
       onLoad: onLoad,
       controller: controller,
-      header: header,
-      enableReverse: enableReverse,
       axis: axis,
       padding: padding,
       initialIndexPage: initialIndexPage,
@@ -54,11 +50,9 @@ class ListViewComponent extends ListView {
 
   ListViewComponent.builder({
     Key? key,
-    required final int count,
-    required Widget Function(int) onBuild,
+    required final int itemCount,
+    required Widget Function(BuildContext context, int indexPosition) onItemBuild,
     final ScrollController? controller,
-    final bool enableShrinkage = false,
-    final bool enableReverse = false,
     final Axis axis = Axis.vertical,
     final EdgeInsets? padding,
   }) : super.builder(
@@ -66,35 +60,28 @@ class ListViewComponent extends ListView {
     padding: padding,
     physics: _scrollPhysic,
     controller: controller,
-    shrinkWrap: enableReverse,
     scrollDirection: axis,
-    itemCount: count,
-    itemBuilder: (context, index) {
-      return onBuild(index);
-    },
+    itemCount: itemCount,
+    itemBuilder: onItemBuild,
   );
 }
 
 class PaginationListViewComponent extends StatefulWidget {
-  final int Function() onCount;
-  final Widget Function(int) onBuild;
-  final Future<bool> Function(int)? onLoad;
+  final Future<bool> Function(int indexPage) onLoad;
+  final int Function() onItemCount;
+  final Widget Function(BuildContext context, int indexPosition) onItemBuild;
   final ScrollController? controller;
-  final Widget? header;
-  final bool enableReverse;
   final Axis axis;
   final EdgeInsets? padding;
   final int initialIndexPage;
 
   const PaginationListViewComponent({
     Key? key,
-    required this.onCount,
-    required this.onBuild,
     required this.onLoad,
+    required this.onItemCount,
+    required this.onItemBuild,
     required this.initialIndexPage,
-    required this.header,
     required this.controller,
-    required this.enableReverse,
     required this.axis,
     required this.padding,
   }) : super(key: key);
@@ -127,19 +114,16 @@ class PaginationListViewComponentState extends State<PaginationListViewComponent
 
   @override
   Widget build(BuildContext context) {
-    final viewCount = widget.onCount();
+    final viewCount = widget.onItemCount();
 
     return ListViewComponent.builder(
       padding: widget.padding,
       controller: _controller,
-      enableReverse: widget.enableReverse,
       axis: widget.axis,
-      count: viewCount + 2,
-      onBuild: (indexPosition) {
-        if (indexPosition == 0) {
-          return widget.header ?? const SizedBox();
-        } else if (indexPosition <= viewCount) {
-          return widget.onBuild(indexPosition - 1);
+      itemCount: viewCount + 1,
+      onItemBuild: (context, indexPosition) {
+        if (indexPosition < viewCount) {
+          return widget.onItemBuild(context, indexPosition);
         } else {
           if (_isLoadable) {
             return const Align(
@@ -170,15 +154,13 @@ class PaginationListViewComponentState extends State<PaginationListViewComponent
     if (mounted) setState(() {});
   }
 
-  void _triggerOnLoad() {
+  void _triggerOnLoad() async {
     if (!_isLoading) {
       if (_isLoadable) {
         _isLoading = true;
-        widget.onLoad?.call(_indexPage++).then((value) {
-          _isLoading = false;
-          _isLoadable = value;
-          if (mounted) setState(() {});
-        });
+        _isLoadable = await widget.onLoad.call(_indexPage++);
+        _isLoading = false;
+        if (mounted) setState(() {});
       }
     }
   }
