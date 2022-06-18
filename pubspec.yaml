@@ -36,14 +36,14 @@ dev_dependencies:
 flutter_icons:
   ios: true
   android: true
-  image_path: asset/media/image/app_logo.png
+  image_path: asset/image/app_logo.png
   remove_alpha_ios: true
 #  adaptive_icon_foreground: asset/image/icon/app.png
 #  adaptive_icon_background: '#3C8DBC'
 
 # Terminal Run: flutter pub run flutter_native_splash:create
 flutter_native_splash:
-  image: asset/media/image/app_splash.png
+  image: asset/image/app_splash.png
   color: '#FFFFFF'
 
 # The following section is specific to Flutter packages.
@@ -51,3 +51,7 @@ flutter:
 
   # Provide Material Icon
   uses-material-design: true
+
+  # Declare Image Asset Resources
+  assets:
+    - asset/image/
