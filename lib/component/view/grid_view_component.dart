@@ -80,22 +80,27 @@ class GridViewComponent extends ListView {
     required final int rowCount,
     required final int itemCount,
     required final Widget Function(BuildContext context, int indexPosition) onItemBuild,
+    final Widget? bottom,
     final EdgeInsets? padding,
     final ScrollController? controller,
     final double? itemSpacing,
     final double? rowSpacing,
   }) : super.builder(
     key: key,
-    itemCount: (itemCount/rowCount).ceil(),
+    itemCount: (itemCount/rowCount).ceil() + 1,
     itemBuilder: (context, listPosition) {
-      return _rowItem(
-        rowCount: rowCount,
-        itemCount: itemCount,
-        listPosition: listPosition,
-        onBuild: (itemPosition) {
-          return onItemBuild(context, itemPosition);
-        },
-      );
+      if (listPosition + 1 < itemCount) {
+        return _rowItem(
+          rowCount: rowCount,
+          itemCount: itemCount,
+          listPosition: listPosition,
+          onBuild: (itemPosition) {
+            return onItemBuild(context, itemPosition);
+          },
+        );
+      } else {
+        return bottom ?? const SizedBox();
+      }
     },
     padding: padding,
     controller: controller,
@@ -150,28 +155,22 @@ class PaginationGridViewComponentState extends State<PaginationGridViewComponent
 
   @override
   Widget build(BuildContext context) {
-    final viewCount = widget.onItemCount();
-
     return GridViewComponent.builder(
       padding: widget.padding,
       controller: _controller,
       rowCount: widget.rowCount,
-      itemCount: viewCount + 1,
+      itemCount: widget.onItemCount(),
       onItemBuild: (context, indexPosition) {
-        if (indexPosition < viewCount) {
-          return widget.onItemBuild(context, indexPosition);
-        } else {
-          if (_isLoadable) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            return const SizedBox(
-              height: 100.0,
-            );
-          }
-        }
+        return widget.onItemBuild(context, indexPosition);
       },
+      bottom: _isLoadable ? const Padding(
+        padding: EdgeInsets.all(32.0),
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ) : const SizedBox(
+        height: 100.0,
+      ),
     );
   }
 
