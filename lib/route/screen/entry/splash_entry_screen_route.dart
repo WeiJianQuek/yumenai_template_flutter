@@ -18,8 +18,14 @@ class SplashEntryScreenRoute extends StatefulWidget {
 class _SplashEntryScreenRouteState extends State<SplashEntryScreenRoute> {
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget.controller.onInitialise(context);
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
+      await Future.delayed(
+        const Duration(
+          seconds: 2,
+        ),
+      );
+
+      if (mounted) widget.controller.onInitialise(context);
     });
     super.initState();
   }
