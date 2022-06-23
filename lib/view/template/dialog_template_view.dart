@@ -62,12 +62,19 @@ class DialogTemplateView extends StatelessWidget {
     }
 
     if (layout is Widget) {
+      if (widgetList.isNotEmpty) {
+        widgetList.add(
+          const SizedBox(
+            height: 12.0,
+          ),
+        );
+      }
       widgetList.add(layout ?? const SizedBox());
     }
 
     if (widgetList.isEmpty) {
       return null;
-    } else if (widgetList.length > 1) {
+    } else if (widgetList.length > 2) {
       return Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         mainAxisSize: MainAxisSize.min,
