@@ -458,7 +458,7 @@ class _SecureInputText extends StatefulWidget {
 }
 
 class _SecureInputTextState extends State<_SecureInputText> {
-  bool enableObscurity = false;
+  bool enableObscurity = true;
 
   @override
   Widget build(BuildContext context) {
@@ -475,13 +475,13 @@ class _SecureInputTextState extends State<_SecureInputText> {
       enableObscurity: enableObscurity,
       enableEditable: widget.enableEditable,
       suffixIcon: enableObscurity ? IconButton(
-        icon: const Icon(Icons.visibility_off),
+        icon: const Icon(Icons.visibility),
         onPressed: () {
           enableObscurity = false;
           if (mounted) setState(() {});
         },
       ) : IconButton(
-        icon: const Icon(Icons.visibility),
+        icon: const Icon(Icons.visibility_off),
         onPressed: () {
           enableObscurity = true;
           if (mounted) setState(() {});
