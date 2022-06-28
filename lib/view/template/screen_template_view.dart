@@ -8,12 +8,12 @@ import '../../main.dart';
 
 const _rootTag = 'screen_template_view';
 
-const _avatarTag = 'avatar_$_rootTag';
-const _titleTag = 'title_$_rootTag';
-const _subtitleTag = 'subtitle_$_rootTag';
-const _actionPrimaryTag = 'action_primary_$_rootTag';
-const _actionSecondaryTag = 'action_secondary_$_rootTag';
-const _creditTag = 'credit_$_rootTag';
+const _tagAvatar = 'avatar_$_rootTag';
+const _tagTextTop = 'top_text_$_rootTag';
+const _tagTextBottom = 'bottom_text_$_rootTag';
+const _tagActionTop = 'top_action_$_rootTag';
+const _tagActionBottom = 'bottom_action_$_rootTag';
+const _tagCredit = 'credit_$_rootTag';
 
 class ScreenTemplateView extends StatelessWidget {
   static Widget avatar({
@@ -22,9 +22,32 @@ class ScreenTemplateView extends StatelessWidget {
     final Widget? form,
     final Widget? actionPrimary,
     final Widget? actionSecondary,
+    final bool enableReversalTagText = false,
+    final bool enableReversalTagAction = false,
   }) {
-    return Scaffold(
-      body: Column(
+    final String topTextTag;
+    final String bottomTextTag;
+    final String topActionTag;
+    final String bottomActionTag;
+
+    if (enableReversalTagText) {
+      topTextTag = _tagTextTop;
+      bottomTextTag = _tagTextBottom;
+    } else {
+      topTextTag = _tagTextBottom;
+      bottomTextTag = _tagTextTop;
+    }
+
+    if (enableReversalTagAction) {
+      topActionTag = _tagActionTop;
+      bottomActionTag = _tagActionBottom;
+    } else {
+      topActionTag = _tagActionBottom;
+      bottomActionTag = _tagActionTop;
+    }
+
+    return ScreenTemplateView.sheet(
+      layout: Column(
         children: [
           Expanded(
             child: Center(
@@ -41,7 +64,7 @@ class ScreenTemplateView extends StatelessWidget {
                   if (actionSecondary is Widget)
                     ...[
                       Hero(
-                        tag: _actionSecondaryTag,
+                        tag: bottomActionTag,
                         child: Material(
                           type: MaterialType.transparency,
                           child: actionSecondary,
@@ -53,7 +76,7 @@ class ScreenTemplateView extends StatelessWidget {
                     ],
                   if (actionPrimary is Widget)
                     Hero(
-                      tag: _actionPrimaryTag,
+                      tag: topActionTag,
                       child: Material(
                         type: MaterialType.transparency,
                         child: actionPrimary,
@@ -68,21 +91,24 @@ class ScreenTemplateView extends StatelessWidget {
                   ),
                   if (subtitle?.isNotEmpty ?? false)
                     Hero(
-                      tag: _subtitleTag,
+                      tag: bottomTextTag,
                       child: Material(
                         type: MaterialType.transparency,
                         child: Text(
                           subtitle ?? '',
                           textAlign: TextAlign.center,
                           style: const TextStyle(
-                            fontSize: 24.0,
+                            fontSize: 20.0,
                           ),
                         ),
                       ),
                     ),
+                  const SizedBox(
+                    height: 8.0,
+                  ),
                   if (title?.isNotEmpty ?? false)
                     Hero(
-                      tag: _titleTag,
+                      tag: topTextTag,
                       child: Material(
                         type: MaterialType.transparency,
                         child: Text(
@@ -102,7 +128,7 @@ class ScreenTemplateView extends StatelessWidget {
                     child: SizedBox.square(
                       dimension: 200.0,
                       child: Hero(
-                        tag: _avatarTag,
+                        tag: _tagAvatar,
                         child: ImageViewComponent.asset(
                           path: resource.image.appSplash,
                         ),
@@ -117,7 +143,7 @@ class ScreenTemplateView extends StatelessWidget {
             height: 8.0,
           ),
           const Hero(
-            tag: _creditTag,
+            tag: _tagCredit,
             child: Material(
               type: MaterialType.transparency,
               child: Text(

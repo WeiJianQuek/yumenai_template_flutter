@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../utility/navigator_utility.dart';
 import '../../screen/entry/landing_entry_screen_route.dart';
+import 'register_entry_controller_route.dart';
 
 class LandingEntryControllerRoute {
   static void navigate(final BuildContext context) {
@@ -20,6 +21,6 @@ class LandingEntryControllerRoute {
   }
 
   void onSignUp(final BuildContext context) {
-
+    RegisterEntryControllerRoute.navigate(context);
   }
 }

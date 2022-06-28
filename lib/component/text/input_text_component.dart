@@ -4,7 +4,7 @@ import 'package:flutter/services.dart';
 const _curveRadius = 12.0;
 
 const _marginSpacing = EdgeInsets.symmetric(
-  vertical: 4.0,
+  vertical: 8.0,
 );
 
 enum InputTextStyle {
