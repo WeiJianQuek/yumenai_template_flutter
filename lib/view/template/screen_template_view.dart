@@ -47,119 +47,113 @@ class ScreenTemplateView extends StatelessWidget {
     }
 
     return ScreenTemplateView.sheet(
-      layout: Column(
-        children: [
-          Expanded(
-            child: Center(
-              child: ListViewComponent(
-                padding: const EdgeInsets.only(
-                  top: 100.0,
-                  left: 16.0,
-                  right: 16.0,
-                  bottom: 16.0,
+      layout: Center(
+        child: ListViewComponent(
+          padding: const EdgeInsets.only(
+            top: 100.0,
+            left: 16.0,
+            right: 16.0,
+            bottom: 50.0,
+          ),
+          enableReverse: true,
+          enableShrinkage: true,
+          viewList: [
+            if (actionSecondary is Widget)
+              ...[
+                Hero(
+                  tag: bottomActionTag,
+                  child: Material(
+                    type: MaterialType.transparency,
+                    child: actionSecondary,
+                  ),
                 ),
-                enableReverse: true,
-                enableShrinkage: true,
-                viewList: [
-                  if (actionSecondary is Widget)
-                    ...[
-                      Hero(
-                        tag: bottomActionTag,
-                        child: Material(
-                          type: MaterialType.transparency,
-                          child: actionSecondary,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 12.0,
-                      ),
-                    ],
-                  if (actionPrimary is Widget)
-                    Hero(
-                      tag: topActionTag,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: actionPrimary,
-                      ),
-                    ),
-                  const SizedBox.square(
-                    dimension: 32.0,
-                  ),
-                  if (form is Widget) form,
-                  const SizedBox(
-                    height: 16.0,
-                  ),
-                  if (subtitle?.isNotEmpty ?? false)
-                    Hero(
-                      tag: bottomTextTag,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          subtitle ?? '',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 20.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  if (title?.isNotEmpty ?? false)
-                    Hero(
-                      tag: topTextTag,
-                      child: Material(
-                        type: MaterialType.transparency,
-                        child: Text(
-                          title ?? '',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 32.0,
-                            fontWeight: FontWeight.w500,
-                          ),
-                        ),
-                      ),
-                    ),
-                  const SizedBox(
-                    height: 32.0,
-                  ),
-                  Center(
-                    child: SizedBox.square(
-                      dimension: 200.0,
-                      child: Hero(
-                        tag: _tagAvatar,
-                        child: ImageViewComponent.asset(
-                          path: resource.image.appSplash,
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
+                const SizedBox(
+                  height: 12.0,
+                ),
+              ],
+            if (actionPrimary is Widget)
+              Hero(
+                tag: topActionTag,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: actionPrimary,
+                ),
               ),
+            const SizedBox.square(
+              dimension: 32.0,
             ),
-          ),
-          const SizedBox(
-            height: 8.0,
-          ),
-          const Hero(
-            tag: _tagCredit,
-            child: Material(
-              type: MaterialType.transparency,
-              child: Text(
-                'Powered By Yumenai',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Color(0xFF616161),
-                  fontSize: 16.0,
+            if (form is Widget) form,
+            const SizedBox(
+              height: 16.0,
+            ),
+            if (subtitle?.isNotEmpty ?? false)
+              Hero(
+                tag: bottomTextTag,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    subtitle ?? '',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 20.0,
+                    ),
+                  ),
+                ),
+              ),
+            const SizedBox(
+              height: 8.0,
+            ),
+            if (title?.isNotEmpty ?? false)
+              Hero(
+                tag: topTextTag,
+                child: Material(
+                  type: MaterialType.transparency,
+                  child: Text(
+                    title ?? '',
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                      fontSize: 32.0,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            const SizedBox(
+              height: 32.0,
+            ),
+            Center(
+              child: SizedBox.square(
+                dimension: 200.0,
+                child: Hero(
+                  tag: _tagAvatar,
+                  child: ImageViewComponent.asset(
+                    path: resource.image.appSplash,
+                  ),
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+      navigatorBottom: Hero(
+        tag: _tagCredit,
+        child: Material(
+          type: MaterialType.card,
+          color: resource.color.system,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 4.0,
+            ),
+            child: Text(
+              'Powered By Yumenai',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: resource.color.onSystem,
+                fontSize: 16.0,
+              ),
+            ),
           ),
-          const SizedBox(
-            height: 8.0,
-          ),
-        ],
+        ),
       ),
     );
   }

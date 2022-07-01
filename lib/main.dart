@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
 
-import 'controller/resource_controller.dart';
-import 'route/controller/entry/splash_entry_controller_route.dart';
+import 'controller/app_controller.dart';
+import 'view/template/app_template_view.dart';
 
-final resource = ResourceController();
+final app = AppController();
+
+ResourceApp get resource {
+  return app.resource;
+}
 
 void main() {
   runApp(
-    MaterialApp(
-      title: 'Flutter Template',
-      home: SplashEntryControllerRoute.screen(),
+    AppTemplateView(
+      appController: app,
     ),
   );
 }
