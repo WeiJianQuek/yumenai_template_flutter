@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import '../../../main.dart';
 import '../../../utility/navigator_utility.dart';
 import '../../screen/dashboard/setting_dashboard_screen_route.dart';
+import '../setting/language_setting_controller_route.dart';
 
 class SettingDashboardControllerRoute {
   static void navigate(final BuildContext context) {
@@ -24,7 +25,9 @@ class SettingDashboardControllerRoute {
 
   void navigatePassword(final BuildContext context) {}
 
-  void navigateLanguage(final BuildContext context) {}
+  void navigateLanguage(final BuildContext context) {
+    LanguageSettingControllerRoute.navigate(context);
+  }
 
   void navigateTheme(final BuildContext context) {}
 
