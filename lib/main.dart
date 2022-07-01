@@ -1,15 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'controller/app_controller.dart';
 import 'view/template/app_template_view.dart';
 
-final app = AppController();
+late final AppController app;
 
-ResourceApp get resource {
-  return app.resource;
-}
+ResourceApp get resource => app.resource;
 
-void main() {
+ServiceApp get service => app.service;
+
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  // Disable landscape mode
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+
+  app = await AppController.setup();
+
   runApp(
     AppTemplateView(
       appController: app,

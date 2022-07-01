@@ -15,6 +15,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Provide Key Value Storage
+  shared_preferences: ^2.0.15
+
 
   # Provide Cupertino Icon
   cupertino_icons: ^1.0.2

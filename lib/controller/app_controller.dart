@@ -2,10 +2,22 @@ import 'package:flutter/material.dart';
 
 import '../data/resource/color_resource_data.dart';
 import '../data/resource/image_resource_data.dart';
+import '../service/storage_service.dart';
 
 class AppController with ChangeNotifier {
+  static Future<AppController> setup() async {
+    return AppController._(
+      service: await ServiceApp.setup(),
+    );
+  }
+
+  final ServiceApp service;
   ThemeMode themeMode = ThemeMode.system;
   ResourceApp resource = ResourceApp.light();
+
+  AppController._({
+    required this.service,
+  });
 
   void updateBrightness(final Brightness brightness) {
     if (brightness == Brightness.dark) {
@@ -48,4 +60,18 @@ class ResourceApp {
       : brightness = Brightness.dark,
         color = const ColorResourceData.dark(),
         image = const ImageResourceData.dark();
+}
+
+class ServiceApp {
+  static Future<ServiceApp> setup() async {
+    return ServiceApp._(
+      storage: await StorageService.setup(),
+    );
+  }
+
+  final StorageService storage;
+
+  const ServiceApp._({
+    required this.storage,
+  });
 }

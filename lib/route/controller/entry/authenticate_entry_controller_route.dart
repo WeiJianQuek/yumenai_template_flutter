@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../../../main.dart';
 import '../../../utility/navigator_utility.dart';
 import '../../screen/entry/authenticate_entry_screen_route.dart';
+import 'splash_entry_controller_route.dart';
 
 class AuthenticateEntryControllerRoute {
   static void navigate(final BuildContext context) {
@@ -19,9 +21,10 @@ class AuthenticateEntryControllerRoute {
 
   AuthenticateEntryControllerRoute._();
 
-  void onSignIn(final BuildContext context) {
+  void onSignIn(final BuildContext context) async {
     if (formKey.currentState?.validate() ?? false) {
-
+      await service.storage.keyValue.setAccessToken('access-token');
+      SplashEntryControllerRoute.navigate(context);
     }
   }
 
