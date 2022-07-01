@@ -29,4 +29,8 @@ class KeyValueStorageService {
   Future<bool> setNotificationToken(final String? value) {
     return _sharedPreferences.setString(_notificationTokenKey, value ?? '');
   }
+
+  Future<bool> clear() {
+    return _sharedPreferences.clear();
+  }
 }

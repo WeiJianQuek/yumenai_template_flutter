@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../data/resource/color_resource_data.dart';
 import '../data/resource/image_resource_data.dart';
+import '../route/controller/entry/splash_entry_controller_route.dart';
 import '../service/storage_service.dart';
 
 class AppController with ChangeNotifier {
@@ -43,6 +44,11 @@ class AppController with ChangeNotifier {
 
       notifyListeners();
     }
+  }
+
+  void signOut(final BuildContext context) async {
+    await service.storage.keyValue.clear();
+    SplashEntryControllerRoute.navigate(context);
   }
 }
 
