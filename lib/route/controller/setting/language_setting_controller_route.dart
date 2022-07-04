@@ -17,12 +17,18 @@ class LanguageSettingControllerRoute {
 
   final paginationListKey = ListViewComponent.setupPaginationKey();
   final languageLocaleModelList = <LanguageLocaleModel> [];
-  int? selectedIndexPosition;
+  int? selectedIndexPosition = 0;
 
   LanguageSettingControllerRoute._();
 
   Future<bool> loadLanguageList(final BuildContext context, final indexPage) async {
-    // TODO get data
+    languageLocaleModelList.add(
+      const LanguageLocaleModel(
+        id: '1',
+        code: 'EN',
+        name: 'English',
+      ),
+    );
     return false;
   }
 
