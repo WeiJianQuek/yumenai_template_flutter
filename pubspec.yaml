@@ -15,6 +15,11 @@ dependencies:
   flutter:
     sdk: flutter
 
+
+  # Provide file picker
+  file_picker: ^4.6.1
+
+
   # Provide Key Value Storage
   shared_preferences: ^2.0.15
 
