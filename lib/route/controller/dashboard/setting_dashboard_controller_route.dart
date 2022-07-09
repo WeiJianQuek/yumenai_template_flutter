@@ -4,6 +4,7 @@ import '../../../main.dart';
 import '../../../utility/navigator_utility.dart';
 import '../../screen/dashboard/setting_dashboard_screen_route.dart';
 import '../setting/language_setting_controller_route.dart';
+import '../setting/proflie_setting_controller_route.dart';
 import '../setting/theme_setting_controller_route.dart';
 
 class SettingDashboardControllerRoute {
@@ -22,7 +23,9 @@ class SettingDashboardControllerRoute {
     return app.themeMode;
   }
 
-  void navigateProfile(final BuildContext context) {}
+  void navigateProfile(final BuildContext context) {
+    ProfileSettingControllerRoute.navigate(context);
+  }
 
   void navigatePassword(final BuildContext context) {}
 
