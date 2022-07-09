@@ -285,7 +285,11 @@ class ScreenTemplateView extends StatelessWidget {
         if (enableSheetMode) {
           color = Theme.of(context).colorScheme.onSurface;
         } else {
-          color = Theme.of(context).colorScheme.onPrimary;
+          if (app.resource.brightness == Brightness.light) {
+            color = Theme.of(context).colorScheme.onPrimary;
+          } else {
+            color = Theme.of(context).colorScheme.onSurface;
+          }
         }
       }
 

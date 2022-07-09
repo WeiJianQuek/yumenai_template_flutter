@@ -4,6 +4,7 @@ import '../../../main.dart';
 import '../../../utility/navigator_utility.dart';
 import '../../screen/dashboard/setting_dashboard_screen_route.dart';
 import '../setting/language_setting_controller_route.dart';
+import '../setting/theme_setting_controller_route.dart';
 
 class SettingDashboardControllerRoute {
   static void navigate(final BuildContext context) {
@@ -29,7 +30,9 @@ class SettingDashboardControllerRoute {
     LanguageSettingControllerRoute.navigate(context);
   }
 
-  void navigateTheme(final BuildContext context) {}
+  void navigateTheme(final BuildContext context) {
+    ThemeSettingControllerRoute.navigate(context);
+  }
 
   void navigateSignOut(final BuildContext context) {
     app.signOut(context);
