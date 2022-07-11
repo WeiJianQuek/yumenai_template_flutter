@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'controller/app_controller.dart';
+import 'controller/resource_controller.dart';
+import 'controller/session_controller.dart';
+import 'controller/service_controller.dart';
 import 'view/template/app_template_view.dart';
 
-late final AppController app;
+late final ResourceController resource;
 
-ResourceApp get resource => app.resource;
+late final ServiceController service;
 
-ServiceApp get service => app.service;
-
+late final SessionController session;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -20,11 +21,15 @@ void main() async {
     DeviceOrientation.portraitDown
   ]);
 
-  app = await AppController.setup();
+  resource = ResourceController.setup();
+
+  service = await ServiceController.setup();
+
+  session = SessionController.setup();
 
   runApp(
     AppTemplateView(
-      appController: app,
+      controller: resource,
     ),
   );
 }

@@ -20,7 +20,7 @@ class SettingDashboardControllerRoute {
   const SettingDashboardControllerRoute._();
 
   ThemeMode get appThemeMode {
-    return app.themeMode;
+    return resource.themeMode;
   }
 
   void navigateProfile(final BuildContext context) {
@@ -38,6 +38,6 @@ class SettingDashboardControllerRoute {
   }
 
   void navigateSignOut(final BuildContext context) {
-    app.signOut(context);
+    session.signOut(context);
   }
 }

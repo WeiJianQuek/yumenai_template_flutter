@@ -30,7 +30,7 @@ class ThemeSettingControllerRoute {
 
     for (int i = 0; i < themeVariableDataMap.keys.length; i++) {
       final data = themeVariableDataMap.keys.elementAt(i);
-      if (data.themeMode == app.themeMode) {
+      if (data.themeMode == resource.themeMode) {
         selectedIndexPosition = i;
       }
     }
@@ -42,7 +42,7 @@ class ThemeSettingControllerRoute {
     if (selectedIndexPosition != indexPosition) {
       selectedIndexPosition = indexPosition;
       paginationListKey.currentState?.refresh();
-      app.updateTheme(themeVariableDataMap.keys.toList()[indexPosition].themeMode);
+      resource.updateTheme(themeVariableDataMap.keys.toList()[indexPosition].themeMode);
     }
   }
 }

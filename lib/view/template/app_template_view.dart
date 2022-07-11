@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import '../../controller/app_controller.dart';
+import '../../controller/resource_controller.dart';
 import '../../data/resource/color_resource_data.dart';
-import '../../main.dart';
 import '../../route/controller/entry/splash_entry_controller_route.dart';
 
 const _lightColorResource = ColorResourceData.light();
 const _darkColorResource = ColorResourceData.dark();
 
 class AppTemplateView extends StatefulWidget {
-  final AppController appController;
+  final ResourceController controller;
 
   const AppTemplateView({
     Key? key,
-    required this.appController,
+    required this.controller,
   }) : super(key: key);
 
   @override
@@ -81,7 +80,7 @@ class _AppTemplateViewState extends State<AppTemplateView> with WidgetsBindingOb
   @override
   void didChangePlatformBrightness() {
     if (mounted) {
-      app.updateBrightness(WidgetsBinding.instance.window.platformBrightness);
+      widget.controller.updateBrightness(WidgetsBinding.instance.window.platformBrightness);
     }
 
     super.didChangePlatformBrightness();
@@ -90,18 +89,18 @@ class _AppTemplateViewState extends State<AppTemplateView> with WidgetsBindingOb
   @override
   Widget build(BuildContext context) {
     return AnimatedBuilder(
-      animation: widget.appController,
+      animation: widget.controller,
       builder: (context, _) {
         final SystemUiOverlayStyle systemUiOverlayStyle;
 
-        if (widget.appController.themeMode == ThemeMode.system) {
+        if (widget.controller.themeMode == ThemeMode.system) {
           if (WidgetsBinding.instance.window.platformBrightness == Brightness.dark) {
             systemUiOverlayStyle = SystemUiOverlayStyle.dark;
           } else {
             systemUiOverlayStyle = SystemUiOverlayStyle.light;
           }
         } else {
-          if (widget.appController.resource.brightness == Brightness.dark) {
+          if (widget.controller.brightness == Brightness.dark) {
             systemUiOverlayStyle = SystemUiOverlayStyle.dark;
           } else {
             systemUiOverlayStyle = SystemUiOverlayStyle.light;
@@ -110,16 +109,16 @@ class _AppTemplateViewState extends State<AppTemplateView> with WidgetsBindingOb
 
        return  AnnotatedRegion<SystemUiOverlayStyle>(
           value: systemUiOverlayStyle.copyWith(
-            systemNavigationBarColor: widget.appController.resource.color.system,
-            systemNavigationBarDividerColor: widget.appController.resource.color.system,
-            statusBarColor: widget.appController.resource.color.system,
+            systemNavigationBarColor: widget.controller.color.system,
+            systemNavigationBarDividerColor: widget.controller.color.system,
+            statusBarColor: widget.controller.color.system,
           ),
           child: MaterialApp(
             title: 'Flutter Template',
             theme: lightTheme,
             darkTheme: darkTheme,
             home: SplashEntryControllerRoute.screen(),
-            themeMode: widget.appController.themeMode,
+            themeMode: widget.controller.themeMode,
           ),
         );
       }
